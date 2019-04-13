@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>键盘控制div移动</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            width: 200px;
+            height: 200px;
+            background-color: #00BFFF;
+            position:absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap"></div>
+    <script type="text/javascript">
+        var wrap = document.getElementsByClassName('wrap')[0];
+        var speed = 10;
+        var kd;
+        //利用定时器解决卡顿
+        setInterval(function(){
+            switch(kd){
+                case 38:
+                    wrap.style.top = wrap.offsetTop-speed + 'px';
+                    break;
+                case 40:
+                    wrap.style.top = speed+wrap.offsetTop + 'px';   
+                    break;
+                case 37:
+                    wrap.style.left = wrap.offsetLeft-speed + 'px';
+                    break;
+                case 39:
+                    wrap.style.left = speed+wrap.offsetLeft + 'px'; 
+                    break;    
+            }
+        },1000/60);
+        
+        document.onkeydown = function(event){
+            //兼容性
+            event = event || window.event;
+            console.log('我按了'+event.key);
+           //判断是否按下shift键
+           if(event.shiftKey){
+                speed = 50;
+            }else{
+                speed = 10;
+            }
+            kd = event.keyCode;
+        }
+        document.onkeyup = function(){
+            console.log('松开了');
+            //松手后停止移动
+            kd = "";
+        }
+        
+
+    </script>
+</body>
+</html>

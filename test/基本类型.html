@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .d1{
+            width: 100px;
+            background-color: red;
+            border: 2px solid;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="d1" class="d1" style="height: 100px"></div>
+    <script type="text/javascript">
+        var a = 123;
+        var b = "hello";
+        var c = 12.3;
+        var arr = ["lin","nan",18];
+        var obj = {name:"lin",sex:"nan",age:18}
+         function fun(x,y){
+            return x+y;
+        }
+        var arr2 = [
+            [1,2,3],
+            [4,5,6],
+            [7,8,9]
+        ];
+        //以类名获取元素
+        // var d1 = document.getElementsByClassName('d1')[0];
+        //以id获取元素
+        var d1 = document.getElementById('d1');
+        //点击响应事件
+        // d1.onclick = function(){
+        //     console.log('123');
+        //     d1.style.width = '200px';
+        //     d1.style.backgroundColor = 'blue';
+        // } 
+
+        //创造函数
+        var d1on = function(){
+            d1.style.width = '200px';
+            d1.style.backgroundColor = 'yellow';
+        }
+    
+        var dw = d1.getAttribute('class');
+        console.log(dw);
+         
+        d1.addEventListener('click',d1on);
+
+        var d1Leave = function(){
+            d1.style.width = '100px';
+            d1.style.height = '100px';
+        }
+        d1.addEventListener('mouseleave',d1Leave);
+       
+        //利用定时器，解决移动卡顿
+        var dir = 0;
+        var speed = 10;
+        setInterval(function(){
+            switch(dir){
+                case 39: 
+                    d1.style.left = d1.offsetLeft+speed+'px';
+                    break;
+                case 37:
+                    d1.style.left = d1.offsetLeft-speed+'px';
+                    break;
+                case 38:
+                    d1.style.top = d1.offsetTop-speed+'px';
+                    break;
+                case 40:
+                    d1.style.top = d1.offsetTop+speed+'px';
+            }
+        },50);
+        document.onkeydown = function(event){
+            console.log('按下了'+event.key);
+            var x = event.keyCode || event.which;
+            
+            console.log(x);
+            //判断是否按下shift键
+            if(event.shiftKey){
+                speed = 50;
+            }else{
+                speed = 10;
+            }
+            console.log(d1.offsetLeft,d1.offsetTop);
+            dir = event.keyCode;    
+        }
+
+        var ku = function(){
+            console.log('松开了');
+            //松手后停止移动
+            dir = 0;
+        }
+        window.addEventListener('keyup',ku);
+
+        //点击拖动事件
+        d1.onmousedown = function(event){
+            var dt = event.clientY - d1.offsetTop;
+            var dl = event.clientX - d1.offsetLeft;
+            document.onmousemove = function(event){
+                event = event || window.event;
+                d1.style.left = event.clientX - dl+ "px";
+                d1.style.top = event.clientY - dt + 'px';
+            }
+            document.onmouseup = function(){
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+            return false;              //取消默认行为
+        }
+        
+        //弹窗
+        var tr = confirm('你是一个美女吗~~~~~~~？');        //确认框,返回true   or   false
+        console.log(tr);
+        if(tr){
+            alert('欢迎大美女~~~');
+            // location.replace('https://www.baidu.com/s?wd=美女');
+        }else{
+            alert('人丑走开~~~');
+            // location.replace('https://www.baidu.com/s?wd=整容');
+            // location.assign('https://www.baidu.com/s?wd=整容');
+        }
+        
+    </script>
+</body>
+</html>

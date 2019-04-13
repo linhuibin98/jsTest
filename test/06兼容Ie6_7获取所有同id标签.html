@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="wrap">高大上</div>
+    <div id="wrap">撒</div>
+
+    <script>
+        //方法一
+        function queryAllById (id) {
+            let nodeList = document.getElementsByTagName('*')
+            //数组用于存储获取的标签
+            let arr = []
+            for (let i = 0; i < nodeList.length; i++) {
+                nodeList[i].id === id ? arr.push(nodeList[i]) : null
+            }
+            return arr
+        }
+        console.log(queryAllById('wrap'))
+
+        //方法二,浏览器会默认将标签中id属性,js中自动获取该节点并未变量
+        console.log(wrap);
+                
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .time {
+            margin: 0 auto;
+            margin-top: 200px;
+            border: 2px dotted black;
+            width: 300px;
+            height: 150px;
+            line-height: 150px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .time>span {
+            color: lightcoral;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="time">倒计时 ：<span>-- : -- : --</span></div>
+    <script>
+        let time = document.querySelector('.time'),
+            span = document.querySelector('.time > span');
+        let queryTime = function () {
+            let localTime = new Date();
+            let endTime = new Date('2019/2/11 20:00:00');
+            //时间差
+            let diffTime = endTime - localTime;
+            //时间差转换为时，分，秒
+            let diffH = Math.floor(diffTime / (1000 * 60 * 60)),
+                diffM = Math.floor((diffTime - diffH * 1000 * 60 * 60) / (1000 * 60)),
+                diffS = Math.floor((diffTime - diffH * 1000 * 60 * 60 - diffM * 1000 * 60) / 1000);
+            diffH < 10 ? diffH = '0' + diffH : null;
+            diffM < 10 ? diffM = '0' + diffH : null;
+            diffS < 10 ? diffS = '0' + diffH : null;
+            span.innerHTML = `${diffH} : ${diffM} : ${diffS}`;
+        }
+        queryTime();
+        let autoTimer = setInterval(queryTime,1000);
+    </script>
+</body>
+
+</html>

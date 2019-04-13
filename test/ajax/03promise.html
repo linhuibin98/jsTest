@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    <script>
+        let promise1 = new Promise((resolve, reject) => {
+            $.ajax({
+            url: 'json/data2.json',
+            success (result) {
+                resolve(result);
+            },
+            error (msg) {
+                reject(msg);
+            }
+            });
+        });
+        promise1.then(
+            result => {
+                console.log('ok', result);
+            },
+            msg => {
+                console.log('no');
+            }
+        );
+    </script>
+</body>
+</html>
