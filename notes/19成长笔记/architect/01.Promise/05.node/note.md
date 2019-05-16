@@ -17,3 +17,16 @@
 >npm node pacakge manager（安装包的）
 >nvm version 管理版本的
 >nrm registery源
+
+## node 事件环
+- 微任务的概念 (promise.then < process.nextTick)
+- 主执行栈
+- timers 时间   setTimeout() 的回调
+- poll 轮训 i/o 回调 fs.readFile()  等待时间到达
+- check setTimeout 方法
+> 默认会从上到下依次执行如果代码执行到po11发现check阶段没有那就在poL1中等待时间到达后在清空代码
+
+切换队列把队列清空如果执行了很多个回调超过了最大限制也会切换队列
+poll 阶段下一个阶段是check 如果check队列中用东西会先执行check
+
+node 11有更新目测（宏任务执行一个就会执行微任务（更像浏览器））新版中每个宏务执行后就会清空微任务
