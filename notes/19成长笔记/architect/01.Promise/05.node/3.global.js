@@ -31,3 +31,11 @@ vm.runInContext
 vm.runInNewContext
 vm.runInThisContext
 */
+vm.runInThisContext('console.log("hello")')
+
+// fs  文件读取模块
+/* 
+  fs.readFlie(path[, 'utf8'], callback)   异步读取文件
+  fs.readFileSync(path[, 'utf8'])  同步读取文件
+  fs.access(path, callback)  异步读取文件
+*/
