@@ -43,6 +43,10 @@ const querystring = require('querystring');
   * 
   */
 
+  const sign = function (value) {  // cookie 加盐
+    return require('crypto').createHmac().update(value).digest('base64');
+  }
+
 http.createServer((req, res) => {
   const {pathname, query} = url.parse(req.url, true);
   const {method} = req;
@@ -97,3 +101,26 @@ res.getCookie = function(key) {
   .listen(3000, () => {
     console.log('server is running port 3000');
   })
+
+// 签名(给cookie标记号) ： 若客户端cookie被篡改
+// crypto   : node核心模块，签名、加密、md5（摘要算法）
+const crypto = require('crypto');
+
+/**
+ * md5  是摘要算法，不是加密
+ * 1. 相同内容，摘要后相同
+ * 2. 不同内容，摘要后内容不同
+ * 3. 长度相同
+ * 4. 摘要后不能反过来
+ * 5. 利用加盐算法，提高安全性
+ * 
+ */
+
+ let str = crypto.createHash('md5').update('123456').digest('base64');
+
+ // 加盐 
+ str = crypto.createHmac()
+
+ console.log(str);
+
+
