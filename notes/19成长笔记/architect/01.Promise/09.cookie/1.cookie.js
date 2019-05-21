@@ -42,9 +42,9 @@ const querystring = require('querystring');
   * - httpOnly  这是微软对Cookie做的扩展。如果在Cookie中设置了"HttpOnly"属性，那么通过程序(JS脚本、Applet等)将无法读取到Cookie信息，这样能有效的防止XSS攻击
   * 
   */
-
+  const secret = 'lhb'; // 秘钥
   const sign = function (value) {  // cookie 加盐
-    return require('crypto').createHmac().update(value).digest('base64');
+    return require('crypto').createHmac('sha256', secret).update(value.toString()).digest('base64').replace(/[+/]/g, '');
   }
 
 http.createServer((req, res) => {
@@ -75,6 +75,10 @@ res.setCookie = function(key, value, options={}) {
     optionsArr.push(`domain=${options.domain}`);
   }
 
+  if (options.signed) {
+    value = value + '.' + sign(value);
+  }
+
   arr.push(`${key}=${value}; ` + optionsArr.join('; '));
 }
 
@@ -84,17 +88,31 @@ res.getCookie = function(key) {
   return cookies[key] || '不存在';
 }
 
+// 获取加盐cookie
+res.getSignCookie = function(key) {
+  let cookies = querystring.parse(req.headers.cookie, '; ') || {};
+  if (cookies[key]) {
+    let [value, signValue] = cookies[key].split('.');
+    if (sign(value) === signValue) {
+      return value;
+    }
+    return '';
+  }
+  
+}
+
   if (pathname === '/write') {
     // 设置cookie, res.setHeader
     // res.setHeader('Set-Cookie', 'name=999');
-    res.setCookie('name', 'lll', {maxAge: 1000})
+    res.setCookie('name', 'hhh', {signed: true})
     res.setHeader('Set-Cookie', arr[0]);
     res.end('ok');
   }
+
   if (pathname === '/read') {
     //读取cookie, req.headers.cookie
     // let cookies = querystring.parse(req.headers.cookie, '; ') || {};
-    let cookie = res.getCookie('name');
+    let cookie = res.getSignCookie('name');
     res.end(JSON.stringify(cookie));
   }
 })
@@ -116,11 +134,12 @@ const crypto = require('crypto');
  * 
  */
 
- let str = crypto.createHash('md5').update('123456').digest('base64');
+ let str1 = crypto.createHash('md5').update('123456').digest('base64');
 
  // 加盐 
- str = crypto.createHmac()
+ let str2 = crypto.createHmac('sha256', 'lhb').update('123456').digest('base64');
 
- console.log(str);
+ console.log(str1);
+ console.log(str2);
 
 
