@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 组件的方法需要加上 .native -->
+  <div id='app'>
+    <my-button @click='handleClick'></my-button>
+  </div>
+
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        name: 'linhubin'
+      },
+      methods: {
+        handleClick() {
+          alert(1);
+        }
+      },
+      components: {
+        myButton: {
+          template: '<div><button @click="$listeners.click">点我啊</button><button>点我啊</button></div>'
+        }
+      }
+    })
+
+    // 父子组件属性/方法 的传递
+    /*
+        props
+
+        $on  /  $emit
+
+        vm.$listeners 
+          包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。
+          它可以通过 v-on="$listeners" 传入内部组件——在创建更高层次的组件时非常有用
+        vm.$attrs
+        包含了父作用域中不作为 prop 被识别 (且获取) 的特性绑定 (class 和 style 除外)。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 (class 和 style 除外)，
+        并且可以通过 v-bind="$attrs" 传入内部组件——在创建高级别的组件时非常有用
+    */
+    
+
+  </script>
+</body>
+</html>

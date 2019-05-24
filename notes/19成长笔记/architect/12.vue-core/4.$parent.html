@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .item {
+      width: 100px;
+      height: 50px;
+      border: 1px solid deepskyblue;
+      line-height: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- 折叠菜单效果 -->
+
+  <!-- vue2.6新增v-slot 简写成 #
+    需要插入的组件或节点 可以用template包裹, slot命名
+    <template v-slot:name>
+      collapse-item></collapse-item>
+      <collapse-item></collapse-item>
+      <collapse-item></collapse-item>
+    </template>
+
+  -->
+  <div id='app'>
+    <collapse>
+      <collapse-item title="Vue"></collapse-item>
+      <collapse-item title="React"></collapse-item>
+      <collapse-item title="Angular"></collapse-item>
+    </collapse>
+  </div>
+
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    /**
+     *  $parent 获取父组件的方法/属性, 父实例，如果当前实例有的话
+     * 
+     * $children
+     * 当前实例的直接子组件。需要注意 $children 并不保证顺序，也不是响应式的。
+     * 如果你发现自己正在尝试使用 $children 来进行数据绑定，
+     * 考虑使用一个数组配合 v-for 来生成子组件，并且使用 Array 作为真正的来源
+     * 
+     * 
+     * 
+    */
+
+
+    Vue.component('Collapse', {
+
+      methods: {
+        cut(childId) {
+          this.$children.forEach(child => {
+            if (child._uid !== childId) {
+              child.isShow = false;
+            }
+          });
+        } 
+      },
+
+      template: `
+        <div class='wrap'>
+          <slot name='default' />
+        </div>
+      `
+    })
+
+    Vue.component('CollapseItem', {
+      props: {
+        title: {
+          type: String
+        }
+      },
+
+      data() {
+        return {
+          isShow: false
+        }
+      },
+
+      methods: {
+        handleChange() {
+          this.$parent.cut(this._uid);
+          this.isShow = !this.isShow;
+        }
+      },
+
+      template: `
+        <div>
+          <div class='item' @click='handleChange'>
+            {{ title }}
+          </div>
+          <div v-show='isShow'>{{title}}</div>
+        </div>
+      `
+    })
+
+    const vm = new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
