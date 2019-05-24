@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-split.5='msg'>
+    <p>{{ msg }}</p>
+  </div>
+
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    // 指令、全局、局部（指定组件内）
+    /*
+      Vue.directive('指令名称', object | func);
+        默认函数形式 = 对象形式的 update + bind 
+        即 {
+          bind() {
+
+          },
+          update() {
+
+          }
+        }
+        对象形式中，有5个钩子函数： 
+        bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置
+        inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中) 
+        update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 
+        componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用
+        unbind：只调用一次，指令与元素解绑时调用
+    */
+
+    Vue.directive('split', {
+      bind(el, bindings, vnode) {
+        let ctx = vnode.context;
+        let [, len] = bindings.rawName.split('.');
+        len = len || 3;
+        el.addEventListener('input', (e)=> {
+          let val = e.target.value.slice(0, len); // 输入框的值
+          ctx[bindings.expression] = val;
+          el.value = val;
+        })
+        // 赋予默认值
+        el.value = ctx[bindings.expression].slice(0, 3);  // 输入框的值
+      },
+      update(el, bindings, vnode) {
+        
+      }
+    })
+
+    /*
+    Vue.directive('split', function(el, bindings, vnode) {
+      console.log(bindings, vnode)
+    })
+    */
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'a'
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <template v-for="item in 3">
+      <div ref="reference">
+        {{ item }}
+      </div>
+    </template>
+    <my ref='child'></my>
+  </div>
+
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    // props emit v-bind=$attrs v-on=$liseners
+    // $parent $child $refs => ref
+    //ref不能给多个元素设置相同的ref 只识别一个
+    //如果遇到循环就是多个元素数组的形势
+    //如果给组件增加ref那么可以获取组件的实例调用组件实例上的方法（一些场见的库，通过这种方式暴露一些方法）
+    const vm = new Vue({
+      el: '#app',
+      mounted() {
+        console.log(this.$refs.reference);
+        console.log(this.$refs.child);
+      },
+      components: {
+        My: {
+          template: `<div>Children</div>`
+        }
+      }
+    })
+  </script>
+</body>
+</html>

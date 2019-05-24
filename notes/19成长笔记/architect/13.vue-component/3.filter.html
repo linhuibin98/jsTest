@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{ name | changeA }}
+  </div>
+
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    // computed、filter 只改变数据展现的形式 ， 并不会改变原数据
+    // fliter分全局和局部
+    // filter 在显示的时候，要配合管道符  {{ name | changA }}
+    Vue.filter('changeA', function(value) {
+      let newValue = value.slice(0, 1).toUpperCase();
+      return newValue;
+    })  
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        name: 'linhuibin'
+      }
+    })
+  </script>
+</body>
+</html>
