@@ -2,9 +2,7 @@
 <!-- 递归组件 iview -->
   <div id='app'>
     <Menu>
-      <MenuItem>菜单1</MenuItem>
-      <MenuItem>菜单2</MenuItem>
-      <MenuItem>菜单3</MenuItem>
+      <Resubmenu :children='children'></Resubmenu>
       <Submenu>
         <template #title>
           <MenuItem>菜单4</MenuItem>
@@ -21,17 +19,56 @@
 import Menu from './Menu.vue';
 import MenuItem from './MenuItem.vue';
 import Submenu from './Submenu.vue';
+import Resubmenu from './Resubmenu.vue';
 
 export default {
   data() {
     return {
-      msg: 'hello'
+      children: [
+        {
+          title: '菜单1',
+          children: [
+            {
+              title: '1-1',
+              children: [
+                {
+                  title: '1-1-1',
+                  children: [
+                    {
+                      title: '1-1-1-1'
+                    },
+                    {
+                      title: '1-1-1-2'
+                    },
+                  ]
+                },
+                {
+                  title: '1-1-2'
+                },
+              ]
+            },
+            {
+              title: '1-2'
+            },
+            {
+              title: '1-3'
+            }
+          ]
+        },
+        {
+          title: '菜单2'
+        },
+        {
+          title: '菜单3'
+        }
+      ]
     }
   },
   components: {
     Menu,
     MenuItem,
-    Submenu
+    Submenu,
+    Resubmenu
   }
 }
 </script>

@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  name: 'Submenu', // name属性 可以用于递归
   data() {
     return {
       flag: false
@@ -23,3 +24,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.submenu-item {
+  padding-left: 10px;
+}
+</style>
+
