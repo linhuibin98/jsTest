@@ -6,3 +6,13 @@ export function getUser() {
     method: 'get'
   })
 }
+
+export function login(username) {
+  return axios.request({
+    url: '/login',
+    method: 'post',
+    data: {
+      username
+    }
+  })
+}
