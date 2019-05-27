@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 
+let secret = 'lhb';
+
 app.use((req, res, next) => {
   res.header("Access-control-Allow-Origin", "http://127.0.0.1:8080");
   res.header("Access-control-Allow-Methods", "GET, OPTIONS, HEAD, POST, PUT");
@@ -26,7 +28,7 @@ app.post('/login', (req, res) => {
     return res.json({
       code: 0,
       username: 'admin',
-      token: jwt.sign({username: 'admin'}, 'lhb', {
+      token: jwt.sign({username: 'admin'}, secret, {
         expiresIn: 20
       })
     })
@@ -34,6 +36,28 @@ app.post('/login', (req, res) => {
     return res.json({
       code: 1,
       msg: '用户名不存在'
+    })
+  }
+});
+
+app.get('/validate', (req, res) => {
+  if (req.headers.authorization) {
+    let token = req.headers.authorization
+    jwt.verify(token, secret, (err, decode) => {
+      if (err) {
+        res.json({
+          code: 1,
+          data: 'token失效了'
+        })
+      } else {
+        res.json({
+          code: 0,
+          username: decode.username,
+          token: jwt.sign({username: decode.username}, secret, {
+            expiresIn: 20
+        })
+        })
+      }
     })
   }
 })

@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import store from '../store';
 
+import { getLocal } from '../libs/saveLocal';
+
 const baseURL = 'http://127.0.0.1:3000';
 
 class AjaxRequest {
@@ -20,7 +22,8 @@ class AjaxRequest {
   // 配置请求、响应拦截器
   setInterceptor(instance, url) {
 
-    instance.interceptors.request.use(config => {
+    instance.interceptors.request.use(config => { // 请求拦截
+      config.headers.authorization = getLocal('token');
       if (Object.keys(this.queue).length === 0) {
         store.commit('changeShowT');    // 开启加载
       }

@@ -17,12 +17,12 @@
     },
     async mounted() {
       let res = await getUser();
-      console.log(res);
     },
     methods: {
       ...mapActions(['toLogin']),
       login() {
         this.toLogin(this.username).then(() => {
+          this.$Message.success('登录成功');
           this.$router.push('/');
         }, (err) => {
           this.$Message.error(err);

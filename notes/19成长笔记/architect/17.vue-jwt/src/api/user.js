@@ -1,18 +1,25 @@
 import axios from '../libs/ajaxRequest';
 
-export function getUser() {
+export const getUser = () => {
   return axios.request({
     url: '/user',
     method: 'get'
   })
 }
 
-export function login(username) {
+export const login = username => {
   return axios.request({
     url: '/login',
     method: 'post',
     data: {
       username
     }
+  })
+}
+
+export const validate = () => {
+  return axios.request({
+    url: '/validate',
+    method: 'get'
   })
 }
