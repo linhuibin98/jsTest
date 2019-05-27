@@ -29,7 +29,7 @@ app.post('/login', (req, res) => {
       code: 0,
       username: 'admin',
       token: jwt.sign({username: 'admin'}, secret, {
-        expiresIn: 20
+        expiresIn: 3600
       })
     })
   } else {
@@ -54,7 +54,7 @@ app.get('/validate', (req, res) => {
           code: 0,
           username: decode.username,
           token: jwt.sign({username: decode.username}, secret, {
-            expiresIn: 20
+            expiresIn: 3600
         })
         })
       }

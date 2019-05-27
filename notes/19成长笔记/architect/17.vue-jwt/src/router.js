@@ -12,6 +12,9 @@ export default new Router({
     },
     {
       path: '/home',
+      meta: {
+        needLogin: true
+      },
       component: Home
     },
     {
@@ -20,6 +23,9 @@ export default new Router({
     },
     {
       path: '/profile',
+      meta: {
+        needLogin: true
+      },
       component: () => import('./views/Profile.vue')
     }
   ]
