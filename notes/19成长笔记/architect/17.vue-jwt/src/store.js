@@ -5,10 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    isShow: false
   },
   mutations: {
-
+    changeShowT() {
+      this.state.isShow = true;
+    },
+    changeShowF() {
+      this.state.isShow = false;
+    }
   },
   actions: {
 
