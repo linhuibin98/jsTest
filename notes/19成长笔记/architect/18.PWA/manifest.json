@@ -1,0 +1,13 @@
+{
+  "name": "漫画网",
+  "short_name": "漫画",
+  "display": "standalone",
+  "start_url": "/index.html",
+  "icons":[{
+    "src":"./180.jpg",
+    "sizes": "144x144",
+    "type":"img/png"
+  }],
+  "background_color": "#aaa",
+  "theme_color":"#aaa"
+}
